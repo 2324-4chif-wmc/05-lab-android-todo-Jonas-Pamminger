@@ -17,4 +17,5 @@ public class TodoApplication extends Application {
         super.onCreate();
         Log.i(TAG, "App started ...");
     }
+
 }
