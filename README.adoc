@@ -1,3 +1,5 @@
+= Aufgabe 2 und 3 wurden im Mircoprojekt gemacht
+
 = Übung - Android mit RxJava3
 Thomas Stütz
 1.0.0, {docdate}
