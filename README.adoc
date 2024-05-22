@@ -1,5 +1,3 @@
-= Aufgabe 2 und 3 wurden im Mircoprojekt gemacht
-
 = Übung - Android mit RxJava3
 Thomas Stütz
 1.0.0, {docdate}
@@ -20,8 +18,88 @@ endif::[]
 
 image::https://img.shields.io/badge/version-1.0.0-blue[]
 
-[sidcrete]
 == Dokumentation
+
+* Aufgabe 2 und 3 wurden im https://github.com/2324-4chif-wmc/microproject-Jonas-Pamminger[Mircroprojekt] gemacht
+
+* Aufgabe 2:
+** Ich hab das Projekt rüberkopiert und dann die alles so überarbeitet, dass es wie bei Aberger seiner Demo aussieht.
+** Ich hab die "NavBar" und die Detailseite erstellt.
+
+[source,kotlin]
+----
+@Composable
+fun TabScreen(model: Model, store: Store?, toDoService: ToDoService?) {
+    var uiState = model.uiState
+    val tabIndex = uiState.selectedTab
+    val tabs = listOf("Home", "ToDos", "Settings")
+    Column(modifier = Modifier.fillMaxWidth()) {
+        TabRow(selectedTabIndex = uiState.selectedTab) {
+            tabs.forEachIndexed { index, title ->
+                Tab(text = { Text(title) },
+                    selected = tabIndex == index,
+                    onClick = { store?.selectTab(index)},
+                    icon = {
+                        when (index) {
+                            0 -> Icon(imageVector = Icons.Default.Home, contentDescription = null)
+                            1 -> BadgedBox(badge = { Badge { Text("${model.toDos.size}") }}) {
+                                Icon(Icons.Filled.Favorite, contentDescription = "ToDos")
+                            }
+                            2 -> Icon(imageVector = Icons.Default.Settings, contentDescription = null)
+                        }
+                    }
+                )
+            }
+        }
+        when (tabIndex) {
+            0 -> HomeScreen(model, toDoService, store)
+            1 -> ToDos(model, toDoService, store)
+            2 -> SettingsScreen(model)
+        }
+    }
+}
+----
+
+** Danach hat die App so ausgesehen
+
+image::img.png[]
+
+* Aufgabe 3:
+
+Da mein Microprojekt das Thema Airport habe ich alle Modelle und Services so umgeschrieben, dass sie zu meinem Projekt passen.
+Dabei habe auch gleich mehrere Entitäten gebraucht:
+
+[source,java]
+----
+public class Airport {
+    private Long id;
+    private String name;
+    private String location;
+
+    private Runway[] runways;
+
+    public Runway[] getRunways() {
+        return runways;
+    }
+    [...]
+}
+----
+[source, java]
+----
+public class Runway {
+    private Long runwayNo;
+    private int length;
+    private boolean isBlocked;
+    [...]
+}
+----
+
+Beim Umbauen der Services hatte ich sehr lange einen Fehler, da damit man auf localhost:8080 zugreifen kann, muss man im Service auf http://10.0.2.2:8080/ zugreifen.
+
+** Am Ende seht jetzt meine App so aus
+
+image::2024-05-22_16-31.png[]
+
 
 * Dokumentieren Sie hier grob Ihre durchgeführten Arbeiten, mit
 
